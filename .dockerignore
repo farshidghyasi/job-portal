@@ -1,0 +1,33 @@
+node_modules
+vendor
+.git
+.github
+.env
+.env.local
+.env.*.local
+
+# Storage (runtime-generated)
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Database (created at runtime)
+database/database.sqlite
+
+# Build artifacts
+public/build
+public/hot
+
+# IDE and OS files
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Testing
+tests
+phpunit.xml
+.phpunit.cache

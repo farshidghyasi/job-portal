@@ -34,6 +34,14 @@ class JobController extends Controller
             $query->where('experience_level', $request->experience);
         }
 
+        if ($request->filled('work_arrangement')) {
+            $query->where('work_arrangement', $request->work_arrangement);
+        }
+
+        if ($request->filled('gender')) {
+            $query->where('gender_preference', $request->gender);
+        }
+
         $jobs = $query->latest()->paginate(12);
 
         $categories = ['Information Technology', 'Healthcare', 'Engineering', 'Education', 'Finance', 'Management', 'Design', 'Marketing', 'Human Resources', 'Administration', 'Customer Service', 'Logistics'];

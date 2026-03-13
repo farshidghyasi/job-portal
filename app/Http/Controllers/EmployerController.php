@@ -77,11 +77,25 @@ class EmployerController extends Controller
             'location' => 'required|string',
         ]);
 
-        JobListing::create(array_merge($request->only([
-            'title', 'description', 'requirements', 'benefits',
-            'category', 'type', 'location', 'salary_min', 'salary_max',
-            'salary_currency', 'experience_level', 'education_level', 'deadline'
-        ]), ['employer_id' => session('user_id'), 'status' => 'active']));
+        $data = $request->only([
+            'title', 'description', 'responsibilities', 'requirements', 'benefits',
+            'category', 'type', 'work_arrangement', 'location', 'country', 'province',
+            'salary_min', 'salary_max', 'salary_currency',
+            'experience_level', 'years_of_experience', 'education_level',
+            'deadline', 'num_vacancies', 'gender_preference',
+        ]);
+
+        if ($request->filled('skills_required')) {
+            $data['skills_required'] = array_map('trim', explode(',', $request->skills_required));
+        }
+        if ($request->filled('skills_preferred')) {
+            $data['skills_preferred'] = array_map('trim', explode(',', $request->skills_preferred));
+        }
+
+        $data['employer_id'] = session('user_id');
+        $data['status'] = 'active';
+
+        JobListing::create($data);
 
         return redirect()->route('employer.jobs')->with('success', 'Job posted successfully!');
     }
@@ -97,11 +111,26 @@ class EmployerController extends Controller
     {
         if ($redirect = $this->checkAuth()) return $redirect;
         $job = JobListing::where('employer_id', session('user_id'))->findOrFail($id);
-        $job->update($request->only([
-            'title', 'description', 'requirements', 'benefits',
-            'category', 'type', 'location', 'salary_min', 'salary_max',
-            'experience_level', 'education_level', 'deadline', 'status'
-        ]));
+        $data = $request->only([
+            'title', 'description', 'responsibilities', 'requirements', 'benefits',
+            'category', 'type', 'work_arrangement', 'location', 'country', 'province',
+            'salary_min', 'salary_max', 'salary_currency',
+            'experience_level', 'years_of_experience', 'education_level',
+            'deadline', 'status', 'num_vacancies', 'gender_preference',
+        ]);
+
+        if ($request->has('skills_required')) {
+            $data['skills_required'] = $request->skills_required
+                ? array_map('trim', explode(',', $request->skills_required))
+                : null;
+        }
+        if ($request->has('skills_preferred')) {
+            $data['skills_preferred'] = $request->skills_preferred
+                ? array_map('trim', explode(',', $request->skills_preferred))
+                : null;
+        }
+
+        $job->update($data);
         return redirect()->route('employer.jobs')->with('success', 'Job updated!');
     }
 

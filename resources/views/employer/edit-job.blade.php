@@ -1,60 +1,258 @@
 @extends('layouts.app')
 @section('title', 'Edit Job - Jobs.AF')
 @section('content')
-<div class="bg-gradient-to-r from-blue-700 to-blue-600 text-white py-8">
-    <div class="max-w-4xl mx-auto px-4"><h1 class="text-2xl font-bold">Edit Job: {{ $job->title }}</h1></div>
+
+{{-- Page Header --}}
+<div class="bg-up-dark text-white py-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <p class="text-up-muted text-sm font-medium uppercase tracking-widest mb-1">Employer</p>
+        <h1 class="text-3xl font-bold text-white">Edit Job</h1>
+        <p class="text-up-muted mt-1 truncate">{{ $job->title }}</p>
+    </div>
 </div>
-<div class="max-w-4xl mx-auto px-4 py-8">
-    <div class="bg-white rounded-xl shadow-sm p-8">
-        <form action="{{ route('employer.jobs.update', $job->id) }}" method="POST">
+
+<div class="bg-up-bg min-h-screen py-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <form action="{{ route('employer.jobs.update', $job->id) }}" method="POST" class="space-y-6">
             @csrf @method('PUT')
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div class="md:col-span-2">
-                    <label class="block text-gray-700 font-medium mb-2">Job Title</label>
-                    <input type="text" name="title" value="{{ old('title', $job->title) }}" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+            {{-- Basic Information --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-circle-info text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Basic Information</h2>
                 </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">Category</label>
-                    <select name="category" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-                        @foreach(['Information Technology', 'Healthcare', 'Engineering', 'Education', 'Finance', 'Management', 'Design', 'Marketing', 'Human Resources', 'Administration', 'Customer Service', 'Logistics'] as $cat)
-                        <option value="{{ $cat }}" {{ old('category', $job->category) === $cat ? 'selected' : '' }}>{{ $cat }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">Status</label>
-                    <select name="status" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="active" {{ $job->status === 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="closed" {{ $job->status === 'closed' ? 'selected' : '' }}>Closed</option>
-                        <option value="draft" {{ $job->status === 'draft' ? 'selected' : '' }}>Draft</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">Location</label>
-                    <input type="text" name="location" value="{{ old('location', $job->location) }}" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">Salary Min (USD)</label>
-                    <input type="number" name="salary_min" value="{{ old('salary_min', $job->salary_min) }}" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">Salary Max (USD)</label>
-                    <input type="number" name="salary_max" value="{{ old('salary_max', $job->salary_max) }}" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-up-dark mb-2">Job Title</label>
+                        <input type="text" name="title" value="{{ old('title', $job->title) }}"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Category</label>
+                        <select name="category" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            @foreach(['Information Technology', 'Healthcare', 'Engineering', 'Education', 'Finance', 'Management', 'Design', 'Marketing', 'Human Resources', 'Administration', 'Customer Service', 'Logistics'] as $cat)
+                            <option value="{{ $cat }}" {{ old('category', $job->category) === $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Status</label>
+                        <select name="status" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="active" {{ old('status', $job->status) === 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="closed" {{ old('status', $job->status) === 'closed' ? 'selected' : '' }}>Closed</option>
+                            <option value="draft" {{ old('status', $job->status) === 'draft' ? 'selected' : '' }}>Draft</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Job Type</label>
+                        <select name="type" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="full-time" {{ old('type', $job->type) === 'full-time' ? 'selected' : '' }}>Full Time</option>
+                            <option value="part-time" {{ old('type', $job->type) === 'part-time' ? 'selected' : '' }}>Part Time</option>
+                            <option value="contract" {{ old('type', $job->type) === 'contract' ? 'selected' : '' }}>Contract</option>
+                            <option value="internship" {{ old('type', $job->type) === 'internship' ? 'selected' : '' }}>Internship</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Work Arrangement</label>
+                        <select name="work_arrangement" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="onsite" {{ old('work_arrangement', $job->work_arrangement) === 'onsite' ? 'selected' : '' }}>On-site</option>
+                            <option value="remote" {{ old('work_arrangement', $job->work_arrangement) === 'remote' ? 'selected' : '' }}>Remote</option>
+                            <option value="hybrid" {{ old('work_arrangement', $job->work_arrangement) === 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Number of Vacancies</label>
+                        <input type="number" name="num_vacancies" value="{{ old('num_vacancies', $job->num_vacancies) }}" min="1"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Gender Preference</label>
+                        <select name="gender_preference" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="any" {{ old('gender_preference', $job->gender_preference) === 'any' ? 'selected' : '' }}>Any</option>
+                            <option value="male" {{ old('gender_preference', $job->gender_preference) === 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('gender_preference', $job->gender_preference) === 'female' ? 'selected' : '' }}>Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Application Deadline</label>
+                        <input type="date" name="deadline" value="{{ old('deadline', $job->deadline ? $job->deadline->format('Y-m-d') : '') }}"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
                 </div>
             </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 font-medium mb-2">Job Description</label>
-                <textarea name="description" rows="6" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">{{ old('description', $job->description) }}</textarea>
+
+            {{-- Location --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-location-dot text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Location</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Country</label>
+                        <select name="country" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="">Select Country</option>
+                            @foreach(['Afghanistan', 'Pakistan', 'Iran', 'Turkey', 'UAE', 'India', 'Other'] as $c)
+                            <option value="{{ $c }}" {{ old('country', $job->country) === $c ? 'selected' : '' }}>{{ $c }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Province / Region</label>
+                        <input type="text" name="province" value="{{ old('province', $job->province) }}"
+                            placeholder="e.g. Kabul, Herat"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">City / Address</label>
+                        <input type="text" name="location" value="{{ old('location', $job->location) }}"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                </div>
             </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 font-medium mb-2">Requirements</label>
-                <textarea name="requirements" rows="4" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">{{ old('requirements', $job->requirements) }}</textarea>
+
+            {{-- Experience & Education --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-graduation-cap text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Experience &amp; Education</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Experience Level</label>
+                        <select name="experience_level" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="entry" {{ old('experience_level', $job->experience_level) === 'entry' ? 'selected' : '' }}>Entry Level</option>
+                            <option value="mid" {{ old('experience_level', $job->experience_level) === 'mid' ? 'selected' : '' }}>Mid Level</option>
+                            <option value="senior" {{ old('experience_level', $job->experience_level) === 'senior' ? 'selected' : '' }}>Senior Level</option>
+                            <option value="executive" {{ old('experience_level', $job->experience_level) === 'executive' ? 'selected' : '' }}>Executive</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Years of Experience</label>
+                        <select name="years_of_experience" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="">Not specified</option>
+                            @foreach(['Less than 1 year', '1-2 years', '2-3 years', '3-5 years', '5-7 years', '7-10 years', '10+ years'] as $yr)
+                            <option value="{{ $yr }}" {{ old('years_of_experience', $job->years_of_experience) === $yr ? 'selected' : '' }}>{{ $yr }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Education Level</label>
+                        <select name="education_level" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="">Not specified</option>
+                            @foreach(["High School", "Diploma", "Bachelor's", "Master's", "PhD", "Other"] as $edu)
+                            <option value="{{ $edu }}" {{ old('education_level', $job->education_level) === $edu ? 'selected' : '' }}>{{ $edu }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="flex gap-4">
-                <a href="{{ route('employer.jobs') }}" class="border border-gray-300 text-gray-600 px-8 py-3 rounded-xl hover:bg-gray-50">Cancel</a>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">Update Job</button>
+
+            {{-- Salary --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-coins text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Salary</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Currency</label>
+                        <select name="salary_currency" class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                            <option value="AFN" {{ old('salary_currency', $job->salary_currency) === 'AFN' ? 'selected' : '' }}>AFN (Afghani)</option>
+                            <option value="USD" {{ old('salary_currency', $job->salary_currency) === 'USD' ? 'selected' : '' }}>USD (Dollar)</option>
+                            <option value="EUR" {{ old('salary_currency', $job->salary_currency) === 'EUR' ? 'selected' : '' }}>EUR (Euro)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Minimum Salary (monthly)</label>
+                        <input type="number" name="salary_min" value="{{ old('salary_min', $job->salary_min) }}"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Maximum Salary (monthly)</label>
+                        <input type="number" name="salary_max" value="{{ old('salary_max', $job->salary_max) }}"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                    </div>
+                </div>
+            </div>
+
+            {{-- Job Details --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-file-lines text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Job Details</h2>
+                </div>
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Job Description</label>
+                        <textarea name="description" rows="5"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 resize-none">{{ old('description', $job->description) }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Responsibilities</label>
+                        <textarea name="responsibilities" rows="4"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 resize-none"
+                            placeholder="List the key responsibilities for this role...">{{ old('responsibilities', $job->responsibilities) }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Requirements</label>
+                        <textarea name="requirements" rows="4"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 resize-none">{{ old('requirements', $job->requirements) }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Skills --}}
+            <div class="bg-white border border-up-border rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-6 pb-5 border-b border-up-border">
+                    <div class="w-9 h-9 bg-up-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-tags text-up-green"></i>
+                    </div>
+                    <h2 class="text-base font-bold text-up-dark">Skills &amp; Benefits</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Required Skills</label>
+                        <input type="text" name="skills_required"
+                            value="{{ old('skills_required', is_array($job->skills_required) ? implode(', ', $job->skills_required) : $job->skills_required) }}"
+                            placeholder="e.g. PHP, Laravel, MySQL (comma-separated)"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                        <p class="text-up-muted text-xs mt-1.5">Separate skills with commas</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-up-dark mb-2">Preferred Skills</label>
+                        <input type="text" name="skills_preferred"
+                            value="{{ old('skills_preferred', is_array($job->skills_preferred) ? implode(', ', $job->skills_preferred) : $job->skills_preferred) }}"
+                            placeholder="e.g. Docker, AWS, Redis (comma-separated)"
+                            class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20">
+                        <p class="text-up-muted text-xs mt-1.5">Nice-to-have skills, separated with commas</p>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-up-dark mb-2">Benefits</label>
+                    <textarea name="benefits" rows="3"
+                        class="w-full border border-up-border rounded-xl px-4 py-3 text-up-dark outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 resize-none">{{ old('benefits', $job->benefits) }}</textarea>
+                </div>
+            </div>
+
+            {{-- Actions --}}
+            <div class="flex items-center gap-4 pb-4">
+                <a href="{{ route('employer.jobs') }}" class="btn-outline px-8 py-3 text-sm font-semibold">Cancel</a>
+                <button type="submit" class="btn-primary px-8 py-3 text-sm font-semibold">Update Job</button>
             </div>
         </form>
     </div>
 </div>
+
 @endsection

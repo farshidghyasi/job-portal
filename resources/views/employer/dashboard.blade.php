@@ -1,46 +1,122 @@
 @extends('layouts.app')
 @section('title', 'Employer Dashboard - Jobs.AF')
 @section('content')
-<div class="bg-gradient-to-r from-blue-700 to-blue-600 text-white py-8">
-    <div class="max-w-7xl mx-auto px-4">
-        <h1 class="text-2xl font-bold">Employer Dashboard 🏢</h1>
-        <p class="text-blue-100">Manage your job postings and applications</p>
+
+{{-- Page Header --}}
+<div class="bg-up-dark text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <p class="text-up-muted text-sm font-medium uppercase tracking-widest mb-1">Employer Dashboard</p>
+        <h1 class="text-3xl font-bold text-white">Welcome back</h1>
+        <p class="text-up-muted mt-1">Manage your job postings and review applications</p>
     </div>
 </div>
-<div class="max-w-7xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-xl p-5 shadow-sm"><div class="text-2xl font-bold text-blue-600">{{ $stats['active_jobs'] }}</div><div class="text-gray-500 text-sm">Active Jobs</div></div>
-        <div class="bg-white rounded-xl p-5 shadow-sm"><div class="text-2xl font-bold text-gray-800">{{ $stats['total_applications'] }}</div><div class="text-gray-500 text-sm">Total Applications</div></div>
-        <div class="bg-white rounded-xl p-5 shadow-sm"><div class="text-2xl font-bold text-yellow-600">{{ $stats['pending_reviews'] }}</div><div class="text-gray-500 text-sm">Pending Review</div></div>
-        <div class="bg-white rounded-xl p-5 shadow-sm"><div class="text-2xl font-bold text-green-600">{{ $stats['hired'] }}</div><div class="text-gray-500 text-sm">Hired</div></div>
-    </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <a href="{{ route('employer.jobs.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-4 text-center transition-all"><div class="text-2xl mb-1">➕</div><div class="text-sm font-medium">Post a Job</div></a>
-        <a href="{{ route('employer.jobs') }}" class="bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 text-center transition-all"><div class="text-2xl mb-1">📋</div><div class="text-sm font-medium">My Jobs</div></a>
-        <a href="{{ route('employer.freelance.create') }}" class="bg-purple-600 hover:bg-purple-700 text-white rounded-xl p-4 text-center transition-all"><div class="text-2xl mb-1">💻</div><div class="text-sm font-medium">Post Freelance</div></a>
-        <a href="{{ route('employer.profile') }}" class="bg-gray-600 hover:bg-gray-700 text-white rounded-xl p-4 text-center transition-all"><div class="text-2xl mb-1">🏢</div><div class="text-sm font-medium">Company Profile</div></a>
-    </div>
+<div class="bg-up-bg border-b border-up-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
 
-    <div class="bg-white rounded-xl shadow-sm p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold text-gray-800">Recent Job Postings</h2>
-            <a href="{{ route('employer.jobs') }}" class="text-blue-600 text-sm">View all →</a>
-        </div>
-        @forelse($recentJobs as $job)
-        <div class="border-b border-gray-100 py-4 last:border-0 flex justify-between items-center">
-            <div>
-                <h3 class="font-semibold text-gray-800">{{ $job->title }}</h3>
-                <p class="text-gray-400 text-sm">{{ $job->applications->count() }} applications · {{ $job->created_at->diffForHumans() }}</p>
+        {{-- Stats Row --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white border border-up-border rounded-2xl p-5">
+                <div class="text-3xl font-bold text-up-green">{{ $stats['active_jobs'] }}</div>
+                <div class="text-up-text text-sm mt-1">Active Jobs</div>
             </div>
-            <div class="flex items-center gap-3">
-                <span class="px-2 py-1 text-xs rounded-full {{ $job->status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">{{ ucfirst($job->status) }}</span>
-                <a href="{{ route('employer.jobs.applications', $job->id) }}" class="text-blue-600 text-sm hover:underline">View Apps</a>
+            <div class="bg-white border border-up-border rounded-2xl p-5">
+                <div class="text-3xl font-bold text-up-dark">{{ $stats['total_applications'] }}</div>
+                <div class="text-up-text text-sm mt-1">Total Applications</div>
+            </div>
+            <div class="bg-white border border-up-border rounded-2xl p-5">
+                <div class="text-3xl font-bold text-yellow-600">{{ $stats['pending_reviews'] }}</div>
+                <div class="text-up-text text-sm mt-1">Pending Review</div>
+            </div>
+            <div class="bg-white border border-up-border rounded-2xl p-5">
+                <div class="text-3xl font-bold text-up-dark">{{ $stats['hired'] }}</div>
+                <div class="text-up-text text-sm mt-1">Hired</div>
+            </div>
+        </div>
+
+        {{-- Quick Actions --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="{{ route('employer.jobs.create') }}"
+                class="bg-white border border-up-border rounded-2xl p-5 flex flex-col items-center text-center hover:border-up-green hover:shadow-md transition-all group">
+                <div class="w-11 h-11 bg-up-bg rounded-xl flex items-center justify-center mb-3 group-hover:bg-up-green/10 transition-colors">
+                    <i class="fa-solid fa-plus text-up-green text-lg"></i>
+                </div>
+                <span class="text-sm font-semibold text-up-dark">Post a Job</span>
+            </a>
+            <a href="{{ route('employer.jobs') }}"
+                class="bg-white border border-up-border rounded-2xl p-5 flex flex-col items-center text-center hover:border-up-green hover:shadow-md transition-all group">
+                <div class="w-11 h-11 bg-up-bg rounded-xl flex items-center justify-center mb-3 group-hover:bg-up-green/10 transition-colors">
+                    <i class="fa-solid fa-briefcase text-up-green text-lg"></i>
+                </div>
+                <span class="text-sm font-semibold text-up-dark">My Jobs</span>
+            </a>
+            <a href="{{ route('employer.freelance.create') }}"
+                class="bg-white border border-up-border rounded-2xl p-5 flex flex-col items-center text-center hover:border-up-green hover:shadow-md transition-all group">
+                <div class="w-11 h-11 bg-up-bg rounded-xl flex items-center justify-center mb-3 group-hover:bg-up-green/10 transition-colors">
+                    <i class="fa-solid fa-laptop-code text-up-green text-lg"></i>
+                </div>
+                <span class="text-sm font-semibold text-up-dark">Post Freelance</span>
+            </a>
+            <a href="{{ route('employer.profile') }}"
+                class="bg-white border border-up-border rounded-2xl p-5 flex flex-col items-center text-center hover:border-up-green hover:shadow-md transition-all group">
+                <div class="w-11 h-11 bg-up-bg rounded-xl flex items-center justify-center mb-3 group-hover:bg-up-green/10 transition-colors">
+                    <i class="fa-solid fa-building text-up-green text-lg"></i>
+                </div>
+                <span class="text-sm font-semibold text-up-dark">Company Profile</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{{-- Recent Jobs --}}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <div class="bg-white border border-up-border rounded-2xl overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-5 border-b border-up-border">
+            <h2 class="text-lg font-bold text-up-dark">Recent Job Postings</h2>
+            <a href="{{ route('employer.jobs') }}" class="text-up-green text-sm font-medium hover:text-up-green-hover transition-colors">
+                View all <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+            </a>
+        </div>
+
+        @forelse($recentJobs as $job)
+        <div class="border-b border-up-border last:border-0 px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-up-bg-light transition-colors">
+            <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-up-dark truncate">{{ $job->title }}</h3>
+                <p class="text-up-muted text-sm mt-0.5">
+                    {{ $job->applications->count() }} application{{ $job->applications->count() !== 1 ? 's' : '' }}
+                    <span class="mx-1.5">&middot;</span>
+                    {{ $job->created_at->diffForHumans() }}
+                </p>
+            </div>
+            <div class="flex items-center gap-3 flex-shrink-0">
+                @if($job->status === 'active')
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-up-green/10 text-up-green">
+                        <span class="w-1.5 h-1.5 rounded-full bg-up-green"></span> Active
+                    </span>
+                @else
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-up-light text-up-text">
+                        <span class="w-1.5 h-1.5 rounded-full bg-up-muted"></span> {{ ucfirst($job->status) }}
+                    </span>
+                @endif
+                <a href="{{ route('employer.jobs.applications', $job->id) }}"
+                    class="btn-outline text-xs font-semibold px-4 py-1.5">
+                    View Apps
+                </a>
             </div>
         </div>
         @empty
-        <p class="text-gray-400 text-center py-8">No jobs posted yet. <a href="{{ route('employer.jobs.create') }}" class="text-blue-600">Post your first job →</a></p>
+        <div class="px-6 py-16 text-center">
+            <div class="w-14 h-14 bg-up-bg rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-briefcase text-up-muted text-2xl"></i>
+            </div>
+            <p class="text-up-text font-medium mb-1">No jobs posted yet</p>
+            <p class="text-up-muted text-sm mb-5">Start attracting candidates by posting your first job.</p>
+            <a href="{{ route('employer.jobs.create') }}" class="btn-primary inline-block px-6 py-2.5 text-sm font-semibold">
+                Post Your First Job
+            </a>
+        </div>
         @endforelse
     </div>
 </div>
+
 @endsection

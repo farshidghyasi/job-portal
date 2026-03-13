@@ -1,39 +1,85 @@
 @extends('layouts.app')
-@section('title', 'Login - Jobs.AF')
+@section('title', 'Log In - Jobs.AF')
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 py-12">
-    <div class="max-w-md mx-auto px-4">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
-            <p class="text-gray-500 mt-2">Login to your Jobs.AF account</p>
-        </div>
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-            <!-- Demo Credentials -->
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-                <p class="text-blue-800 font-semibold text-sm mb-2">🔑 Demo Credentials:</p>
-                <div class="text-xs text-blue-700 space-y-1">
-                    <p><strong>Job Seeker:</strong> khalid@gmail.com / password</p>
-                    <p><strong>Employer:</strong> ahmad@techcorp.af / password</p>
-                    <p><strong>Freelancer:</strong> bilal@gmail.com / password</p>
-                    <p><strong>Admin:</strong> admin@jobs.af / password → <a href="{{ route('admin.login') }}" class="underline">Admin Panel</a></p>
-                </div>
-            </div>
 
-            <form action="{{ route('login') }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-medium mb-2">Email Address</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 @error('email') border-red-500 @enderror">
-                    @error('email')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
-                </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Password</label>
-                    <input type="password" name="password" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500">
-                </div>
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all">Login</button>
-            </form>
-            <p class="text-center text-gray-500 mt-4 text-sm">Don't have an account? <a href="{{ route('register') }}" class="text-green-600 hover:underline font-medium">Register</a></p>
+<div class="min-h-screen bg-up-bg flex items-center justify-center py-16 px-4">
+    <div class="w-full max-w-md">
+
+        {{-- Page heading --}}
+        <div class="text-center mb-8">
+            <a href="{{ route('home') }}" class="inline-block mb-6">
+                <span class="text-up-dark font-extrabold text-3xl tracking-tight">jobs<span class="text-up-green">.af</span></span>
+            </a>
+            <h1 class="text-2xl font-bold text-up-dark">Welcome back</h1>
+            <p class="text-up-text mt-1 text-[15px]">Log in to your Jobs.AF account</p>
         </div>
+
+        {{-- Demo credentials info card --}}
+        <div class="bg-white border border-up-border rounded-2xl p-5 mb-6">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-7 h-7 rounded-full bg-up-green/10 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-key text-up-green text-xs"></i>
+                </span>
+                <p class="text-up-dark font-semibold text-sm">Demo Credentials</p>
+            </div>
+            <div class="space-y-1.5 text-[13px] text-up-text pl-9">
+                <p><span class="font-medium text-up-dark">Job Seeker:</span> khalid@gmail.com / password</p>
+                <p><span class="font-medium text-up-dark">Employer:</span> ahmad@techcorp.af / password</p>
+                <p><span class="font-medium text-up-dark">Freelancer:</span> bilal@gmail.com / password</p>
+                <p>
+                    <span class="font-medium text-up-dark">Admin:</span> admin@jobs.af / password &rarr;
+                    <a href="{{ route('admin.login') }}" class="text-up-green hover:text-up-green-hover font-medium underline underline-offset-2">Admin Panel</a>
+                </p>
+            </div>
+        </div>
+
+        {{-- Login card --}}
+        <div class="bg-white border border-up-border rounded-2xl p-8">
+            <form action="{{ route('login') }}" method="POST" novalidate>
+                @csrf
+
+                <div class="mb-5">
+                    <label class="block text-up-dark font-medium text-sm mb-1.5" for="email">Email address</label>
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        autocomplete="email"
+                        placeholder="you@example.com"
+                        class="w-full border border-up-border rounded-xl px-4 py-3 text-[15px] text-up-dark placeholder-up-muted focus:outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 transition @error('email') border-red-400 @enderror"
+                    >
+                    @error('email')
+                        <p class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <div class="mb-7">
+                    <label class="block text-up-dark font-medium text-sm mb-1.5" for="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        autocomplete="current-password"
+                        placeholder="••••••••"
+                        class="w-full border border-up-border rounded-xl px-4 py-3 text-[15px] text-up-dark placeholder-up-muted focus:outline-none focus:border-up-green focus:ring-2 focus:ring-up-green/20 transition"
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-3 text-[15px] font-semibold">
+                    Log In
+                </button>
+            </form>
+
+            <p class="text-center text-up-text text-sm mt-6">
+                Don't have an account?
+                <a href="{{ route('register') }}" class="text-up-green hover:text-up-green-hover font-semibold">Sign up for free</a>
+            </p>
+        </div>
+
     </div>
 </div>
+
 @endsection
