@@ -59,14 +59,14 @@
             <!-- Logo -->
             <div class="flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="flex items-center">
-                    <span class="text-up-dark font-extrabold text-2xl tracking-tight">jobs<span class="text-up-green">.af</span></span>
+                    <img src="{{ asset('images/logo.svg') }}" alt="Jobs.AF" class="h-8">
                 </a>
                 <!-- Main Nav -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="{{ route('jobs.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Find Work</a>
-                    <a href="{{ route('freelancers.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Find Talent</a>
-                    <a href="{{ route('freelance.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Projects</a>
-                    <a href="{{ route('companies.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Companies</a>
+                    <a href="{{ route('jobs.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Find Job</a>
+                    <a href="{{ route('freelancers.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Hire Talents</a>
+                    <a href="{{ route('freelance.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Freelance Work</a>
+                    <a href="{{ route('companies.index') }}" class="text-up-dark hover:text-up-green nav-link text-[15px] font-medium">Employers</a>
                 </div>
             </div>
 
@@ -112,11 +112,11 @@
 @yield('content')
 
 <!-- Footer -->
-<footer class="bg-up-dark text-white mt-20">
+<footer class="bg-up-dark text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
             <div class="col-span-2 md:col-span-1">
-                <span class="font-extrabold text-2xl tracking-tight">jobs<span class="text-up-green">.af</span></span>
+                <img src="{{ asset('images/logo.svg') }}" alt="Jobs.AF" class="h-8 brightness-0 invert">
                 <p class="text-up-muted text-sm mt-4 leading-relaxed">Afghanistan's premier talent marketplace connecting professionals with opportunities.</p>
                 <div class="flex space-x-4 mt-6">
                     <a href="#" class="text-up-muted hover:text-up-green transition-colors"><i class="fab fa-facebook-f"></i></a>
@@ -126,18 +126,18 @@
                 </div>
             </div>
             <div>
-                <h4 class="font-semibold text-sm uppercase tracking-wider mb-4 text-white/80">For Clients</h4>
+                <h4 class="font-semibold text-sm uppercase tracking-wider mb-4 text-white/80">For Employers</h4>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="{{ route('freelancers.index') }}" class="text-up-muted hover:text-up-green transition-colors">Find Talent</a></li>
+                    <li><a href="{{ route('freelancers.index') }}" class="text-up-muted hover:text-up-green transition-colors">Hire Talents</a></li>
                     <li><a href="{{ route('register') }}" class="text-up-muted hover:text-up-green transition-colors">Post a Job</a></li>
-                    <li><a href="{{ route('companies.index') }}" class="text-up-muted hover:text-up-green transition-colors">Companies</a></li>
+                    <li><a href="{{ route('companies.index') }}" class="text-up-muted hover:text-up-green transition-colors">Employers</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-semibold text-sm uppercase tracking-wider mb-4 text-white/80">For Talent</h4>
+                <h4 class="font-semibold text-sm uppercase tracking-wider mb-4 text-white/80">For Job Seekers</h4>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="{{ route('jobs.index') }}" class="text-up-muted hover:text-up-green transition-colors">Find Work</a></li>
-                    <li><a href="{{ route('freelance.index') }}" class="text-up-muted hover:text-up-green transition-colors">Projects</a></li>
+                    <li><a href="{{ route('jobs.index') }}" class="text-up-muted hover:text-up-green transition-colors">Find Job</a></li>
+                    <li><a href="{{ route('freelance.index') }}" class="text-up-muted hover:text-up-green transition-colors">Freelance Work</a></li>
                     <li><a href="{{ route('resume.index') }}" class="text-up-muted hover:text-up-green transition-colors">Build Resume</a></li>
                 </ul>
             </div>
@@ -161,7 +161,6 @@
     <div class="border-t border-white/10 py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center text-sm text-up-muted">
             <p>&copy; {{ date('Y') }} Jobs.AF. All rights reserved.</p>
-            <p class="mt-2 md:mt-0">Built by <a href="https://laracopilot.com/" target="_blank" class="text-up-green hover:underline">LaraCopilot</a></p>
         </div>
     </div>
 </footer>

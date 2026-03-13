@@ -3,58 +3,45 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="bg-up-dark text-white overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28">
-        <div class="max-w-3xl">
-            <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight">
-                How work<br>should <span class="text-up-green">work</span>
-            </h1>
-            <p class="text-xl text-[#9aaa97] mt-6 max-w-xl leading-relaxed">
-                Forget the old rules. You can find the best talent, the best jobs, and the best projects — all in Afghanistan.
-            </p>
-
-            <!-- Search Bar -->
-            <div class="mt-10 flex flex-col sm:flex-row gap-3 max-w-2xl">
-                <form action="{{ route('jobs.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3 flex-1">
-                    <div class="relative flex-1">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-up-muted"></i>
-                        <input type="text" name="search" placeholder='Try "Software Engineer" or "Marketing"' class="w-full pl-11 pr-4 py-4 rounded-xl bg-white text-up-dark text-[15px] outline-none border-2 border-transparent focus:border-up-green transition-colors">
-                    </div>
-                    <button type="submit" class="btn-primary px-8 py-4 font-semibold text-[15px] whitespace-nowrap rounded-xl">Search Jobs</button>
-                </form>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="mt-8 flex flex-wrap gap-2">
-                <span class="text-up-muted text-sm mr-1">Popular:</span>
-                <a href="{{ route('jobs.index') }}?category=Information+Technology" class="text-sm text-white/70 hover:text-up-green border border-white/20 hover:border-up-green px-4 py-1.5 rounded-pill transition-all">Tech</a>
-                <a href="{{ route('jobs.index') }}?category=Healthcare" class="text-sm text-white/70 hover:text-up-green border border-white/20 hover:border-up-green px-4 py-1.5 rounded-pill transition-all">Healthcare</a>
-                <a href="{{ route('jobs.index') }}?category=Engineering" class="text-sm text-white/70 hover:text-up-green border border-white/20 hover:border-up-green px-4 py-1.5 rounded-pill transition-all">Engineering</a>
-                <a href="{{ route('jobs.index') }}?category=Education" class="text-sm text-white/70 hover:text-up-green border border-white/20 hover:border-up-green px-4 py-1.5 rounded-pill transition-all">Education</a>
-            </div>
-        </div>
+<section class="relative min-h-[600px] flex items-center overflow-hidden">
+    <!-- Background image -->
+    <div class="absolute inset-0">
+        <img src="{{ asset('images/hero.jpg') }}" alt="" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
     </div>
-</section>
 
-<!-- Trusted By / Stats -->
-<section class="bg-up-bg-light border-b border-up-border">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <div class="text-3xl font-extrabold text-up-dark">{{ number_format($stats['total_jobs']) }}+</div>
-                <div class="text-up-text text-sm mt-1 font-medium">Jobs Posted</div>
-            </div>
-            <div>
-                <div class="text-3xl font-extrabold text-up-dark">{{ number_format($stats['total_companies']) }}+</div>
-                <div class="text-up-text text-sm mt-1 font-medium">Companies</div>
-            </div>
-            <div>
-                <div class="text-3xl font-extrabold text-up-dark">{{ number_format($stats['total_jobseekers']) }}+</div>
-                <div class="text-up-text text-sm mt-1 font-medium">Job Seekers</div>
-            </div>
-            <div>
-                <div class="text-3xl font-extrabold text-up-dark">{{ number_format($stats['total_freelancers']) }}+</div>
-                <div class="text-up-text text-sm mt-1 font-medium">Freelancers</div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32 w-full">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight max-w-3xl">
+            Find your next job or hire top talent in <span class="text-up-green">Afghanistan</span>
+        </h1>
+
+        <!-- Tab Buttons + Search -->
+        <div class="mt-10 max-w-2xl">
+            <div class="bg-up-dark/80 backdrop-blur-md rounded-2xl p-5 border border-white/10">
+                <!-- Find Talent / Browse Jobs Tabs -->
+                <div class="flex mb-4">
+                    <a href="{{ route('jobs.index') }}" class="flex-1 text-center py-2.5 rounded-pill border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-all">Find Job</a>
+                    <a href="{{ route('freelancers.index') }}" class="flex-1 text-center py-2.5 rounded-pill text-white/60 font-semibold text-sm hover:text-white transition-all">Hire Talents</a>
+                </div>
+
+                <!-- Search Bar -->
+                <form action="{{ route('jobs.index') }}" method="GET" class="flex gap-2">
+                    <input type="text" name="search" placeholder="Search jobs by title, skill, or company" class="flex-1 px-4 py-3 rounded-xl bg-white text-up-dark text-sm outline-none border-2 border-transparent focus:border-up-green transition-colors">
+                    <button type="submit" class="bg-up-dark text-white hover:bg-up-green px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-colors whitespace-nowrap">
+                        <i class="fas fa-search text-xs"></i> Search
+                    </button>
+                </form>
+
+                <!-- Trusted By -->
+                <div class="mt-4 flex items-center justify-between px-1">
+                    <span class="text-white/30 text-xs font-medium tracking-wider uppercase">Trusted by</span>
+                    <div class="flex items-center gap-6">
+                        <span class="text-white/30 text-xs font-bold tracking-wide">ROSHAN</span>
+                        <span class="text-white/30 text-xs font-bold tracking-wide">NETLINKS</span>
+                        <span class="text-white/30 text-xs font-bold tracking-wide">AWCC</span>
+                        <span class="text-white/30 text-xs font-bold tracking-wide hidden sm:inline">ETISALAT</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -65,8 +52,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-bold text-up-dark">Browse talent by category</h2>
-                <p class="text-up-text mt-2">Find jobs in your field of expertise</p>
+                <h2 class="text-3xl font-bold text-up-dark">Browse jobs by category</h2>
+                <p class="text-up-text mt-2">Explore opportunities in your field of expertise</p>
             </div>
             <a href="{{ route('jobs.index') }}" class="hidden md:inline-flex items-center text-up-green hover:text-up-green-hover font-medium text-[15px] group">
                 All categories <i class="fas fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
@@ -159,8 +146,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-bold">Browse projects</h2>
-                <p class="text-up-muted mt-2">Find flexible freelance projects and remote work</p>
+                <h2 class="text-3xl font-bold">Browse freelance projects</h2>
+                <p class="text-up-muted mt-2">Browse freelance projects or hire talent for your next project</p>
             </div>
             <a href="{{ route('freelance.index') }}" class="hidden md:inline-flex items-center text-up-green hover:text-up-green-hover font-medium text-[15px] group">
                 All projects <i class="fas fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
@@ -194,8 +181,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-bold text-up-dark">Top rated talent</h2>
-                <p class="text-up-text mt-2">Hire skilled professionals for your projects</p>
+                <h2 class="text-3xl font-bold text-up-dark">Top freelancers</h2>
+                <p class="text-up-text mt-2">Skilled professionals available for hire</p>
             </div>
             <a href="{{ route('freelancers.index') }}" class="hidden md:inline-flex items-center text-up-green hover:text-up-green-hover font-medium text-[15px] group">
                 View all <i class="fas fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
@@ -227,8 +214,8 @@
         <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Ready to get started?</h2>
         <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">Join thousands of professionals and companies already using Jobs.AF to connect, collaborate, and grow.</p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="{{ route('register') }}" class="btn-dark px-8 py-4 font-semibold text-base">Find Talent</a>
-            <a href="{{ route('register') }}" class="bg-white text-up-dark hover:bg-up-bg px-8 py-4 rounded-pill font-semibold text-base transition-all">Find Work</a>
+            <a href="{{ route('register') }}" class="btn-dark px-8 py-4 font-semibold text-base">Post a Job</a>
+            <a href="{{ route('jobs.index') }}" class="bg-white text-up-dark hover:bg-up-bg px-8 py-4 rounded-pill font-semibold text-base transition-all">Find Job</a>
         </div>
     </div>
 </section>
