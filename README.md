@@ -1,59 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Job Portal
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-featured job portal web application built with Laravel 12, supporting job listings, freelance projects, resume management, and multi-role user workflows.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Job Listings
+- Post and browse full-time, part-time, contract, and internship positions
+- Filter by category (IT, Healthcare, Engineering, Education, Finance, Marketing, and more)
+- Salary ranges with currency support
+- Experience levels: entry, mid, senior, executive
+- Featured job promotion and view count tracking
+- Application deadline management
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Freelance Marketplace
+- Post freelance projects with fixed-price or hourly budgets
+- Remote, onsite, or hybrid location types
+- Freelancers submit proposals with bid amount and delivery timeline
+- Proposal tracking and status management
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Resume Builder
+- Create and manage multiple resumes
+- Sections for skills, languages, experience, education, and certifications
+- Toggle resumes between public and private visibility
+- Attach resumes to job applications
 
-## Learning Laravel
+### Company & Freelancer Directory
+- Public company profiles with active job listings
+- Freelancer directory with ratings and skill filters
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## User Roles
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Feature | Jobseeker | Employer | Freelancer | Admin |
+|---|---|---|---|---|
+| Browse & search jobs | Yes | - | - | - |
+| Apply for jobs | Yes | - | - | - |
+| Create resumes | Yes | - | - | - |
+| Save/bookmark jobs | Yes | - | - | - |
+| Post job listings | - | Yes | - | - |
+| Post freelance projects | - | Yes | - | - |
+| Review applications | - | Yes | - | - |
+| Submit proposals | - | - | Yes | - |
+| Manage profile & portfolio | - | - | Yes | - |
+| User management | - | - | - | Yes |
+| Content moderation | - | - | - | Yes |
+| Platform statistics | - | - | - | Yes |
 
-## Laravel Sponsors
+## Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend:** PHP 8.2+, Laravel 12
+- **Frontend:** Blade templates, Tailwind CSS 4, Vite 7
+- **Database:** SQLite (default), MySQL supported
+- **Authentication:** Session-based with bcrypt password hashing
 
-### Premium Partners
+## Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Prerequisites
 
-## Contributing
+- PHP 8.2 or higher
+- Composer
+- Node.js & npm
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Quick Setup
 
-## Code of Conduct
+```bash
+# Clone the repository
+git clone https://github.com/farshidghyasi/job-portal.git
+cd job-portal
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Run the setup script (installs dependencies, generates key, runs migrations)
+composer run setup
 
-## Security Vulnerabilities
+# Seed the database with sample data
+php artisan db:seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Manual Setup
+
+```bash
+# Install PHP dependencies
+composer install
+
+# Copy environment file and generate app key
+cp .env.example .env
+php artisan key:generate
+
+# Run database migrations
+php artisan migrate
+
+# Install frontend dependencies and build assets
+npm install
+npm run build
+```
+
+### Running the Development Server
+
+```bash
+# Start all services concurrently (app server, queue, logs, Vite)
+composer run dev
+```
+
+This starts:
+- Laravel development server on `http://localhost:8000`
+- Queue worker for background jobs
+- Log viewer (Laravel Pail)
+- Vite dev server for hot module replacement
+
+## Sample Data
+
+After seeding, the following accounts are available:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@jobs.af` | `password` |
+| Employer | See seeder | `password` |
+| Jobseeker | See seeder | `password` |
+| Freelancer | See seeder | `password` |
+
+The seeder creates 5 employers, 5 jobseekers, 5 freelancers, and 20 job listings across various categories.
+
+## Project Structure
+
+```
+app/
+├── Http/Controllers/
+│   ├── Admin/              # Admin panel (users, jobs, freelance moderation)
+│   ├── AuthController       # Registration, login, logout
+│   ├── JobController        # Public job browsing and filtering
+│   ├── ApplicationController# Job applications
+│   ├── JobseekerController  # Jobseeker dashboard and profile
+│   ├── EmployerController   # Employer dashboard, job & application management
+│   ├── FreelancerController # Freelancer dashboard and proposals
+│   ├── FreelanceJobController# Freelance project management
+│   └── ResumeController     # Resume CRUD and public viewing
+├── Models/                  # Eloquent models (User, JobListing, Resume, etc.)
+database/
+├── migrations/              # Database schema definitions
+├── seeders/                 # Sample data generators
+resources/
+├── views/                   # Blade templates organized by feature
+routes/
+└── web.php                  # All application routes
+```
+
+## Configuration
+
+Key `.env` settings:
+
+```env
+DB_CONNECTION=sqlite          # Switch to mysql for production
+SESSION_DRIVER=database
+CACHE_STORE=database
+BCRYPT_ROUNDS=12
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
